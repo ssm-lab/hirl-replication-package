@@ -16,3 +16,7 @@ inputFolder = './data'
 outputFolder = './output'
 data = pd.read_excel(f'{inputFolder}/data-extracted.xlsx')
 column = 'Sus. dimensions'
+
+columnFilename = {
+    'Sus. dimensions' : 'sustainability_dim'
+}
