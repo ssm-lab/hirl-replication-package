@@ -13,7 +13,7 @@ For the paper Trust by Collaboration
 
 - `/data`
 
-  - `data-full.xlsx` - Data sheet of 30 participants
+  - `data-extracted.xlsx` - Data sheet of 30 participants
 
 - `/scripts` – Analysis scripts for the automated analysis of data  
 - `/output` – Results of the analyses as used in the article  
