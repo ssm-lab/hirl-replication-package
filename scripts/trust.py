@@ -15,8 +15,12 @@ from matplotlib.ticker import MaxNLocator
 inputFolder = './data'
 outputFolder = './output'
 data = pd.read_excel(f'{inputFolder}/data-extracted.xlsx')
+data_df.index = pd.to_datetime(data_df.index) #convert index column into DateTime column data_df.plot()
+into DateTime column data_df.plot()
 
-}
+
+
+
 def create_bar_chart_from_file(file_path, x_column, y_column, title, x_label, y_label, output_filename="trust.pdf"):
     """
     Creates a bar chart from a specified file using Pandas and Matplotlib.
