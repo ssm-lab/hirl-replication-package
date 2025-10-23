@@ -25,4 +25,4 @@ data = pd.DataFrame({'Q1': {0: 'Strongly disagree', 1: 'Agree', ...},
 # Now plot it!
 import plot_likert
 
-plot_likert.plot_likert(data, plot_likert.scales.agree, plot_percentage=True);
+plot_likert.plot_likert(phase1-G1-18, plot_likert.scales.agree, plot_percentage=True);
