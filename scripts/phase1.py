@@ -12,9 +12,9 @@ from matplotlib import pyplot as plt
 from matplotlib.offsetbox import AnchoredText
 from matplotlib.ticker import MaxNLocator
 
-inputFolder = './data'
-outputFolder = './output'
-data = pd.read_excel(f'{inputFolder}/data-extracted.xlsx')
+inputFolder = './phase1-G1-18'
+outputFolder = './phase1.pdf'
+data = pd.read_excel(f'{inputFolder}/phase1-G1-18.xlsx')
 data_df.index = pd.to_datetime(data_df.index) #convert index column into DateTime column data_df.plot()
 into DateTime column data_df.plot()
 
