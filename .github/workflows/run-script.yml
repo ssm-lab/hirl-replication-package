@@ -1,0 +1,36 @@
+name: Run Python Script Automatically
+
+on:
+  push:                # This means: run when you push new data or code
+    branches:
+      - main           # or "master" if your repo uses that instead
+    paths:
+      - 'data/**'      # any change inside data folder
+      - 'scripts/**'   # or any change inside scripts folder
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest   # GitHub uses a temporary computer
+
+    steps:
+      - name: Get repository code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install needed libraries
+        run: |
+          pip install pandas matplotlib openpyxl
+
+      - name: Run your script
+        run: |
+          python scripts/likert_plot.py
+
+      - name: Save generated files
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-files
+          path: output/
