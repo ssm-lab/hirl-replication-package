@@ -11,7 +11,6 @@ from collections import Counter
 from matplotlib import pyplot as plt
 from matplotlib.offsetbox import AnchoredText
 from matplotlib.ticker import MaxNLocator
-
 inputFolder = './phase1-G1-18'
 outputFolder = './phase1.pdf'
 data = pd.read_excel(f'{inputFolder}/phase1-G1-18.xlsx')
