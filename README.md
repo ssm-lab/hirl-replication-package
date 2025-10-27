@@ -13,7 +13,8 @@ For the paper Trust by Collaboration
 
 - `/data`
 
-  - `data-extracted.xlsx` - Data sheet of 30 participants
+  - `phase1-G1-18.xlsx` - Data sheet of 18 participants for phase 1
+  - - `phase2-G1-18.xlsx` - Data sheet of 18 participants for phase 2
 
 - `/scripts` – Analysis scripts for the automated analysis of data  
 - `/output` – Results of the analyses as used in the article  
