@@ -29,4 +29,5 @@ For the paper Trust by Collaboration
 
 ### Run analysis scripts
 
+- Generate results of the analyses by executing `python scripts/script.py` from the root folder.
 
