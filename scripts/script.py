@@ -137,8 +137,6 @@ if __name__ == "__main__":
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     p1 = pd.read_excel(DATA_DIR / "P1-1-30.xlsx")
     p2 = pd.read_excel(DATA_DIR / "P2-1-30.xlsx")
-    print("P1 data:", p1.shape)
-    print("P2 data:", p2.shape)
 
     # likert order
     likert_scale = ['Strongly disagree','Disagree','Neutral','Agree','Strongly agree']
