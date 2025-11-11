@@ -65,7 +65,6 @@ def draw_combined_and_save(all_data, likert_scale, width, out_pdf,
                      figsize=(width, HEIGHT),
                      legend=False)
 
-    # style
     for side in ["top", "right", "left", "bottom"]:
         ax.spines[side].set_visible(False)
     if show_y_labels:
@@ -77,7 +76,6 @@ def draw_combined_and_save(all_data, likert_scale, width, out_pdf,
     ax.set_xticklabels([])
     ax.set_xlabel("")
 
-    # numbers on bars
     label_colors = ['white','white','white','white','white','white']
     for i, (bars, color) in enumerate(zip(ax.containers, label_colors)):
         if i == 0:
@@ -87,7 +85,7 @@ def draw_combined_and_save(all_data, likert_scale, width, out_pdf,
 
     fig = ax.figure
     fig.tight_layout()
-    fig.savefig(OUT_DIR / out_pdf,   bbox_inches='tight')  # keep both versions for cropping
+    fig.savefig(OUT_DIR / out_pdf,   bbox_inches='tight')
     return (n1, n2, n3)
 
 def crop_by_rows(src_pdf, n1, n2, n3, out1, out2, out3):
@@ -132,7 +130,6 @@ def crop_by_rows(src_pdf, n1, n2, n3, out1, out2, out3):
 
 # ================= MAIN =================
 if __name__ == "__main__":
-
     # ---------------- paths & data ----------------
     PROJECT_ROOT = Path(__file__).resolve().parents[1]
     DATA_DIR = PROJECT_ROOT / "data"
