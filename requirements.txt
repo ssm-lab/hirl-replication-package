@@ -6,3 +6,5 @@ plot-likert == 0.5.0
 PyPDF2 == 3.0.1
 openpyxl >= 3.1
 scipy == 1.13.1
+plotly == 6.5.0
+kaleido==0.2.1

@@ -1,0 +1,6 @@
+before,Strongly disagree,Disagree,Neutral,Agree,Strongly agree
+Strongly disagree,0,0,0,0,0
+Disagree,0,1,0,3,0
+Neutral,0,2,1,3,1
+Agree,0,1,0,1,2
+Strongly agree,0,0,0,0,0

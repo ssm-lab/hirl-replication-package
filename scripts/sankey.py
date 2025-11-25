@@ -1,0 +1,91 @@
+# ---------- Sankey: Trust (before->after) ----------
+import pandas as pd
+from pathlib import Path
+import plotly.graph_objects as go
+import numpy as np
+LIKERT5 = ['Strongly disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly agree']
+
+def _clean_likert(s: pd.Series) -> pd.Series:
+    s = s.astype(str).str.strip()
+    s = s.where(s.isin(LIKERT5))
+    return s.dropna()
+
+def make_trust_sankey(p1: pd.DataFrame, p2: pd.DataFrame, out_dir: Path,
+                      before_col_idx: int = 7, after_col_idx: int = 7,
+                      out_name: str = "sankey_trust"):
+    """
+    Build a Sankey diagram for Trust at the individual level.
+    """
+    out_dir.mkdir(parents=True, exist_ok=True)
+    before = _clean_likert(p1.iloc[:, before_col_idx]).reset_index(drop=True)
+    after  = _clean_likert(p2.iloc[:, after_col_idx]).reset_index(drop=True)
+    df = pd.DataFrame({"before": before, "after": after}).dropna().reset_index(drop=True)
+    trans = (pd.crosstab(df["before"], df["after"])
+               .reindex(index=LIKERT5, columns=LIKERT5, fill_value=0))
+    trans.to_csv(out_dir / f"{out_name}_transition.csv")
+
+
+    before_nodes = [f"Before: {lab}" for lab in LIKERT5]
+    after_nodes  = [f"After: {lab}"  for lab in LIKERT5]
+    labels = before_nodes + after_nodes
+
+    src, tgt, val = [], [], []
+    for i_b, b in enumerate(LIKERT5):
+        for i_a, a in enumerate(LIKERT5):
+            v = int(trans.loc[b, a])
+            if v > 0:
+                src.append(i_b)
+                tgt.append(5 + i_a)
+                val.append(v)
+
+
+    node_colors = (
+        ['#B22222', '#F08080', '#C0C0C0', '#6495ED', '#00008B'] +  # Before
+        ['#B22222', '#F08080', '#C0C0C0', '#6495ED', '#00008B']     # After
+    )
+
+    fig = go.Figure(data=[go.Sankey(
+        arrangement="fixed",
+        node=dict(
+            pad=18, thickness=16,
+            line=dict(color="rgba(0,0,0,0)", width=0.1),
+            label=labels, color=node_colors,
+            # x=x_positions,
+            # y=y_positions
+        ),
+        link=dict(source=src, target=tgt, value=val))])
+
+    fig.update_layout(
+        # title="Trust in AI (Before → After) Individual Transitions",
+        font=dict(size=14)
+    )
+    fig.write_image(str(out_dir / f"{out_name}.png"), scale=3)
+    try:
+        fig.write_image(str(out_dir / f"{out_name}.pdf"))
+    except Exception as e:
+        print("PDF export requires kaleido; skipping PDF. Error:", e)
+    print(f"Sankey saved to {out_dir / (out_name + '.png')} and CSV saved to {out_dir / (out_name + '_transition.csv')}")
+
+if __name__ == '__main__':
+    # ---------------- paths & data ----------------
+    PROJECT_ROOT = Path(__file__).resolve().parents[1]
+    DATA_DIR = PROJECT_ROOT / "data"
+    OUT_DIR = PROJECT_ROOT / "output"
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    p1 = pd.read_excel(DATA_DIR / "P1-1-30.xlsx")
+    p2 = pd.read_excel(DATA_DIR / "P2-1-30.xlsx")
+
+    # likert order
+    likert_scale = ['Strongly disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly agree']
+    make_trust_sankey(p1, p2, OUT_DIR, before_col_idx=7, after_col_idx=7, out_name="sankey_trust")
+
+    # Sankey per group:
+    g1_p1 = p1.iloc[1:16].reset_index(drop=True)
+    g1_p2 = p2.iloc[1:16].reset_index(drop=True)
+    g2_p1 = p1.iloc[16:31].reset_index(drop=True)
+    g2_p2 = p2.iloc[16:31].reset_index(drop=True)
+    make_trust_sankey(g1_p1, g1_p2, OUT_DIR / "group1", before_col_idx=7, after_col_idx=7,
+                      out_name="sankey_trust_group1")
+    make_trust_sankey(g2_p1, g2_p2, OUT_DIR / "group2", before_col_idx=7, after_col_idx=7,
+                      out_name="sankey_trust_group2")
+
