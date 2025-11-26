@@ -169,8 +169,8 @@ def make_trust_sankey_3bin_ordered(p1: pd.DataFrame, p2: pd.DataFrame, out_dir: 
                 val.append(v)
 
     node_colors = (
-            ['#6495ED', '#C0C0C0', '#F08080'] +
-            ['#6495ED', '#C0C0C0', '#F08080']
+            ['#F08080', '#C0C0C0', '#6495ED'] +
+            ['#F08080', '#C0C0C0', '#6495ED']
     )
     # node_colors = (
     #     ['#F08080', '#C0C0C0', '#6495ED'] +
