@@ -3,6 +3,8 @@ import pandas as pd
 from pathlib import Path
 import plotly.graph_objects as go
 import numpy as np
+from PIL import Image
+
 LIKERT5 = ['Strongly disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly agree']
 
 THREE_BINS = ['Disagree', 'Neutral', 'Agree']
@@ -63,7 +65,7 @@ def make_trust_sankey(p1: pd.DataFrame, p2: pd.DataFrame, out_dir: Path,
     fig = go.Figure(data=[go.Sankey(
         arrangement="fixed",
         node=dict(
-            pad=18, thickness=16,
+            pad=10, thickness=10,
             line=dict(color="rgba(0,0,0,0)", width=0.1),
             label=labels, color=node_colors,
             # x=x_positions,
@@ -71,15 +73,24 @@ def make_trust_sankey(p1: pd.DataFrame, p2: pd.DataFrame, out_dir: Path,
         ),
         link=dict(source=src, target=tgt, value=val))])
 
-    fig.update_layout(
-        # title="Trust in AI (Before → After) Individual Transitions",
-        font=dict(size=14)
+    fig.update_layout(font=dict(size=18.5),
+                      margin=dict(l=10, r=10, t=10, b=10),
+    height = 400,
+    width = 700
     )
-    fig.write_image(str(out_dir / f"{out_name}.png"), scale=3)
+    fig.write_image(str(out_dir / f"{out_name}.png"), scale=4)
+    png_path = str(out_dir / f"{out_name}.png")
     try:
-        fig.write_image(str(out_dir / f"{out_name}.pdf"))
+        pdf_path = str(out_dir / f"{out_name}.pdf")
+        img = Image.open(png_path)
+
+        if img.mode == 'RGBA':
+            img = img.convert('RGB')
+        img.save(pdf_path, "PDF", resolution=300, quality=100)
+        print(f"PDF saved to {pdf_path}")
     except Exception as e:
-        print("PDF export requires kaleido; skipping PDF. Error:", e)
+        print(f"PDF export failed: {e}")
+
     print(f"Sankey saved to {out_dir / (out_name + '.png')} and CSV saved to {out_dir / (out_name + '_transition.csv')}")
 
 
@@ -118,22 +129,34 @@ def make_trust_sankey_3bin(p1: pd.DataFrame, p2: pd.DataFrame, out_dir: Path,
     fig = go.Figure(data=[go.Sankey(
         arrangement="fixed",
         node=dict(
-            pad=18, thickness=16,
+            pad=10, thickness=10,
             line=dict(color="rgba(0,0,0,0)", width=0.1),
-            label=labels, color=node_colors,
+            label=labels, color=node_colors
         ),
         link=dict(source=src, target=tgt, value=val,
                   color="rgba(128,128,128,0.45)"))
     ])
 
 
-    fig.update_layout(font=dict(size=14), margin=dict(l=10, r=10, t=10, b=10))
+    fig.update_layout(font=dict(size=18.5),
+                      margin=dict(l=10, r=10, t=10, b=10),
+    height = 400,
+    width = 700
 
-    fig.write_image(str(out_dir / f"{out_name}.png"), scale=3)
+    )
+
+    fig.write_image(str(out_dir / f"{out_name}.png"), scale=4)
+    png_path = str(out_dir / f"{out_name}.png")
     try:
-        fig.write_image(str(out_dir / f"{out_name}.pdf"))
+        pdf_path = str(out_dir / f"{out_name}.pdf")
+        img = Image.open(png_path)
+
+        if img.mode == 'RGBA':
+            img = img.convert('RGB')
+        img.save(pdf_path, "PDF", resolution=300, quality=100)
+        print(f"PDF saved to {pdf_path}")
     except Exception as e:
-        print("PDF export requires kaleido; skipping PDF. Error:", e)
+        print(f"PDF export failed: {e}")
 
     print(f"3-bin Sankey saved to {out_dir / (out_name + '.png')}")
 
@@ -194,13 +217,24 @@ def make_trust_sankey_3bin_ordered(p1: pd.DataFrame, p2: pd.DataFrame, out_dir: 
     ])
 
 
-    fig.update_layout(font=dict(size=14), margin=dict(l=10, r=10, t=10, b=100))
+    fig.update_layout(font=dict(size=18.5), margin=dict(l=10, r=10, t=10, b=100),
+                      height=400,
+                      width=700
+                      )
 
-    fig.write_image(str(out_dir / f"{out_name}.png"), scale=3)
+    fig.write_image(str(out_dir / f"{out_name}.png"), scale=4)
+    png_path = str(out_dir / f"{out_name}.png")
     try:
-        fig.write_image(str(out_dir / f"{out_name}.pdf"))
+        pdf_path = str(out_dir / f"{out_name}.pdf")
+        img = Image.open(png_path)
+
+        if img.mode == 'RGBA':
+            img = img.convert('RGB')
+        img.save(pdf_path, "PDF", resolution=300, quality=100)
+        print(f"PDF saved to {pdf_path}")
     except Exception as e:
-        print("PDF export requires kaleido; skipping PDF. Error:", e)
+        print(f"PDF export failed: {e}")
+
 
     print(f"3-bin Sankey saved to {out_dir / (out_name + '.png')}")
 
@@ -217,7 +251,7 @@ if __name__ == '__main__':
 
     # likert order
     likert_scale = ['Strongly disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly agree']
-    make_trust_sankey(p1, p2, OUT_DIR, before_col_idx=7, after_col_idx=7, out_name="sankey_trust")
+    make_trust_sankey(p1, p2, OUT_DIR, before_col_idx=7, after_col_idx=7, out_name="sankey_trust_5x5")
 
     # Sankey per group:
     g1_p1 = p1.iloc[1:16].reset_index(drop=True)
@@ -225,9 +259,9 @@ if __name__ == '__main__':
     g2_p1 = p1.iloc[16:31].reset_index(drop=True)
     g2_p2 = p2.iloc[16:31].reset_index(drop=True)
     make_trust_sankey(g1_p1, g1_p2, OUT_DIR / "group1", before_col_idx=7, after_col_idx=7,
-                      out_name="sankey_trust_group1")
+                      out_name="sankey_trust_5x5_group1")
     make_trust_sankey(g2_p1, g2_p2, OUT_DIR / "group2", before_col_idx=7, after_col_idx=7,
-                      out_name="sankey_trust_group2")
+                      out_name="sankey_trust_5x5_group2")
 
     make_trust_sankey_3bin(p1, p2, OUT_DIR, before_col_idx=7, after_col_idx=7,
                            out_name="sankey_trust_3x3")

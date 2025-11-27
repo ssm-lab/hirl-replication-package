@@ -42,7 +42,7 @@ def build_fig2_frames(p2):
     return pd.DataFrame({
         'Observation → improved confidence':      p2.iloc[:, 13],
         'Observation → improved understandability': p2.iloc[:, 14],
-        'Guidance was useful for performance':    p2.iloc[:, 15],
+        'Collaboration was useful for performance':    p2.iloc[:, 15],
         'I prefer the agent to work without guidance': p2.iloc[:, 16]
     })
 
@@ -286,4 +286,3 @@ if __name__ == "__main__":
 
     # --- chi-square: Group1 vs Group2 ---
     run_group_chi2_by_rows(p1, p2, OUT_DIR / "chi2_group1_vs_group2.csv")
-
