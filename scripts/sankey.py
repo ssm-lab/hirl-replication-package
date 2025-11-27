@@ -254,10 +254,16 @@ if __name__ == '__main__':
     make_trust_sankey(p1, p2, OUT_DIR, before_col_idx=7, after_col_idx=7, out_name="sankey_trust_5x5")
 
     # Sankey per group:
-    g1_p1 = p1.iloc[1:16].reset_index(drop=True)
-    g1_p2 = p2.iloc[1:16].reset_index(drop=True)
-    g2_p1 = p1.iloc[16:31].reset_index(drop=True)
-    g2_p2 = p2.iloc[16:31].reset_index(drop=True)
+    # g1_p1 = p1.iloc[1:16].reset_index(drop=True)
+    # g1_p2 = p2.iloc[1:16].reset_index(drop=True)
+    # g2_p1 = p1.iloc[16:31].reset_index(drop=True)
+    # g2_p2 = p2.iloc[16:31].reset_index(drop=True)
+    # Group 1: IDs 1–15
+    g1_p1 = p1.iloc[0:15].reset_index(drop=True)
+    g1_p2 = p2.iloc[0:15].reset_index(drop=True)
+    # Group 2: IDs 16–30
+    g2_p1 = p1.iloc[15:30].reset_index(drop=True)
+    g2_p2 = p2.iloc[15:30].reset_index(drop=True)
     make_trust_sankey(g1_p1, g1_p2, OUT_DIR / "group1", before_col_idx=7, after_col_idx=7,
                       out_name="sankey_trust_5x5_group1")
     make_trust_sankey(g2_p1, g2_p2, OUT_DIR / "group2", before_col_idx=7, after_col_idx=7,

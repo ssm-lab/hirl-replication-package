@@ -236,11 +236,11 @@ if __name__ == "__main__":
 
     # ---------- SUB GROUP GENERATION ----------
     # Group 1: IDs 1–15
-    g1_p1 = p1.iloc[1:16].reset_index(drop=True)
-    g1_p2 = p2.iloc[1:16].reset_index(drop=True)
+    g1_p1 = p1.iloc[0:15].reset_index(drop=True)
+    g1_p2 = p2.iloc[0:15].reset_index(drop=True)
     # Group 2: IDs 16–30
-    g2_p1 = p1.iloc[16:31].reset_index(drop=True)
-    g2_p2 = p2.iloc[16:31].reset_index(drop=True)
+    g2_p1 = p1.iloc[15:30].reset_index(drop=True)
+    g2_p2 = p2.iloc[15:30].reset_index(drop=True)
 
     # ---------- GROUP 1: IDs 1–15 ----------
     g1_fig1 = build_fig1_frames(g1_p1, g1_p2)
@@ -268,6 +268,7 @@ if __name__ == "__main__":
     g2_fig2 = build_fig2_frames(g2_p2)
     g2_fig3 = build_fig3_frames(g2_p2)
     g2_all = pd.concat([g2_fig1, g2_fig2, g2_fig3], axis=1)
+
 
     draw_combined_and_save(
         g2_all, likert_scale, width,
