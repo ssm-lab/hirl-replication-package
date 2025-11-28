@@ -43,7 +43,7 @@ def build_fig2_frames(p2):
         'Observation → improved confidence':      p2.iloc[:, 13],
         'Observation → improved understandability': p2.iloc[:, 14],
         'Collaboration was useful for performance':    p2.iloc[:, 15],
-        'I prefer the agent to work without guidance': p2.iloc[:, 16]
+        'I prefer the agent to work without collaboration': p2.iloc[:, 16]
     })
 
 def build_fig3_frames(p2):
