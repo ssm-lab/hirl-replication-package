@@ -42,14 +42,14 @@ def build_fig2_frames(p2):
     return pd.DataFrame({
         'Observation → improved confidence in agent':      p2.iloc[:, 13],
         'Observation → improved understandability': p2.iloc[:, 14],
-        'Collaboration was useful for performance':    p2.iloc[:, 15],
-        'I prefer the agent to work without collaboration': p2.iloc[:, 16]
+        'Interacting with the agent was useful for it\'s performance ':    p2.iloc[:, 15],
+        'I prefer the agent to work without human interaction': p2.iloc[:, 16]
     })
 
 def build_fig3_frames(p2):
     return pd.DataFrame({
         'Increased Focus':    p2.iloc[:, 17],
-        'Decreased Confidence in own advice': p2.iloc[:, 18]
+        'Decreased Self-Confidence': p2.iloc[:, 18]
     })
 
 
