@@ -130,71 +130,6 @@ def crop_by_rows(src_pdf, n1, n2, n3, out1, out2, out3):
         w3.write(f)
 
 
-# --- chi square helpers ---
-# --- Chi-square helpers (row-based split, 3-bin Likert) ---
-
-THREE_BINS = ['Disagree', 'Neutral', 'Agree']
-
-def collapse_to_three(series: pd.Series) -> np.ndarray:
-    s = series.astype(str).str.strip()
-    return np.where(s.isin(['Strongly disagree','Disagree']), 'Disagree',
-           np.where(s.eq('Neutral'), 'Neutral',
-           np.where(s.isin(['Agree','Strongly agree']), 'Agree', np.nan)))
-
-def counts_three(series: pd.Series) -> np.ndarray:
-    s3 = pd.Series(collapse_to_three(series)).dropna()
-    return s3.value_counts().reindex(THREE_BINS, fill_value=0).to_numpy()
-
-def pooled_counts_cols(df: pd.DataFrame, col_idx: list[int], row_slice: slice) -> np.ndarray:
-    """Concatenate responses for df.iloc[row_slice, col_idx] then count into 3 bins."""
-    pooled = pd.concat([df.iloc[row_slice, i] for i in col_idx], ignore_index=True)
-    return counts_three(pooled)
-
-def chisq_2x3(g1_counts: np.ndarray, g2_counts: np.ndarray):
-    table = np.vstack([g1_counts, g2_counts])  # shape (2,3)
-    chi2, p, dof, expected = chi2_contingency(table, correction=False)
-    n = table.sum()
-    return chi2, p, dof, table, expected
-
-def run_group_chi2_by_rows(p1: pd.DataFrame, p2: pd.DataFrame, out_csv_path):
-    """
-    Group1: rows 2–16 (iloc[1:16]); Group2: rows 17–31 (iloc[16:31]).
-    Figure 1 = P2 cols 7–12.
-    Figure 2 = P2 cols 13–16.
-    Figure 3 = P2 cols 17–18.
-    """
-    g1_rows = slice(1, 16)
-    g2_rows = slice(16, 31)
-
-    fig1_after_cols = list(range(7, 13))
-    fig2_cols = list(range(13, 17))
-    fig3_cols = list(range(17, 19))
-
-    results = []
-    for name, cols in [
-        ("Figure1_After_only", fig1_after_cols),
-        ("Figure2_Collaboration", fig2_cols),
-        ("Figure3_Time", fig3_cols),
-    ]:
-        g1 = pooled_counts_cols(p2, cols, g1_rows)
-        g2 = pooled_counts_cols(p2, cols, g2_rows)
-        chi2, p, dof, table, expected = chisq_2x3(g1, g2)
-
-        print(f"\n{name}")
-        print(f"  Group1 counts [Disagree, Neutral, Agree]: {g1.tolist()}")
-        print(f"  Group2 counts [Disagree, Neutral, Agree]: {g2.tolist()}")
-        print(f"  Chi²={chi2:.3f}, dof={dof}, p={p:.4f}")
-
-        results.append({
-            "set": name,
-            "g1_disagree": int(g1[0]), "g1_neutral": int(g1[1]), "g1_agree": int(g1[2]),
-            "g2_disagree": int(g2[0]), "g2_neutral": int(g2[1]), "g2_agree": int(g2[2]),
-            "chi2": chi2, "dof": dof, "p_value": p
-        })
-
-    pd.DataFrame(results).to_csv(out_csv_path, index=False)
-    print("\nSaved chi-square summary to:", out_csv_path)
-
 
 # ================= MAIN =================
 if __name__ == "__main__":
@@ -285,5 +220,3 @@ if __name__ == "__main__":
     crop_by_rows('group2/all_combined_Group2.pdf', n1, n2, n3,
                  'group2/figure1-Group2.pdf', 'group2/figure2-Group2.pdf', 'group2/figure3-Group2.pdf')
 
-    # --- chi-square: Group1 vs Group2 ---
-    run_group_chi2_by_rows(p1, p2, OUT_DIR / "chi2_group1_vs_group2.csv")
