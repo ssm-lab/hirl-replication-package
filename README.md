@@ -1,10 +1,10 @@
 # Replication package
-For the paper *On the Implications of Urgency in Human-AI Interaction*
+For the paper *Trust the AI, Doubt Yourself: The Hidden Effect of Urgency on Self-Confidence in Human-AI Interaction*
 ---
 
 ## About
-Studies show that interactions with an AI system fosters trust in human users towards AI. An often overlooked element of such interaction dynamics is the (sense of) urgency when the human user is prompted by an AI agent, e.g., for advice or guidance. In this paper, we show that although the presence of urgency in human-AI interactions does not affect the trust in AI, it may be detrimental to the human user's confidence and sense of value in their own work. In the long run, the loss of confidence may lead to suboptimal decisions, human errors, and ultimately, unsustainable AI systems.
-Our evidence comes from an experiment with thirty human participants.
+Studies show that interactions with an AI system fosters trust in human users towards AI. An often overlooked element of such interaction dynamics is the (sense of) urgency when the human user is prompted by an AI agent, e.g., for advice or guidance. In this paper, we show that although the presence of urgency in human-AI interactions does not affect the trust in AI, it may be detrimental to the human user's self-confidence and self-efficacy. In the long run, the loss of confidence may lead to performance loss, suboptimal decisions, human errors, and ultimately, unsustainable AI systems.
+Our evidence comes from an experiment with 30 human participants.
 Our results indicate that users may feel more confident in their work when they are eased into the human-AI setup rather than exposed to it without preparation. We elaborate on the implications of this finding for software engineers and decision-makers.
 
 ## Contents
