@@ -25,5 +25,5 @@ Our results indicate that users may feel more confident in their work when they 
 
 ### Run analysis scripts
 
-- Generate results of the analyses by executing `python scripts/script.py` from the root folder.
+- Generate results of the analyses by executing `python scripts/script.py` and `python scripts/sankey.py` from the root folder.
 
