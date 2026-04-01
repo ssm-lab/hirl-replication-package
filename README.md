@@ -1,5 +1,8 @@
 # Replication package
 For the paper *Trust the AI, Doubt Yourself: The Hidden Effect of Urgency on Self-Confidence in Human-AI Interaction*
+
+[![DOI](https://zenodo.org/badge/1077142603.svg)](https://doi.org/10.5281/zenodo.19362930)
+
 ---
 
 ## About
