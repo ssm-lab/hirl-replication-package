@@ -4,6 +4,9 @@ from pathlib import Path
 import plotly.graph_objects as go
 import numpy as np
 from PIL import Image
+import matplotlib
+matplotlib.rcParams['pdf.fonttype'] = 42
+matplotlib.rcParams['ps.fonttype'] = 42
 
 LIKERT5 = ['Strongly disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly agree']
 

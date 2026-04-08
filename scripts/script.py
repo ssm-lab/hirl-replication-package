@@ -7,6 +7,9 @@ from PyPDF2 import PdfReader, PdfWriter
 from pathlib import Path
 import numpy as np
 from scipy.stats import chi2_contingency
+import matplotlib
+matplotlib.rcParams['pdf.fonttype'] = 42
+matplotlib.rcParams['ps.fonttype'] = 42
 
 
 def autosize_height(n_items, per_bar=0.5, pad=0.6):
